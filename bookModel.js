@@ -1,15 +1,15 @@
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb+srv://aryapradeep212:Arya@cluster0.zbd2evl.mongodb.net/?retryWrites=true&w=majority");
+mongoose.connect('mongodb+srv://aryapradeep212:Arya@cluster0.zbd2evl.mongodb.net/?retryWrites=true&w=majority')
 
 let Schema = mongoose.Schema;
 
 const bookSchema = new Schema({
-    bookno: {
-      type: Number,
-      unique: true,
-      required: true,
-    },
+  isbn: {
+    type: String,
+    unique: true,
+    required: true,
+  },
     bookname: {
       type: String,
       required: true,
@@ -22,11 +22,10 @@ const bookSchema = new Schema({
       type: String,
       required: true,
     },
-    isbn: {
-      type: String,
-      unique: true,
-      required: true,
-    },
+    borrowedBy:[{
+      type:Schema.Types.ObjectId,
+      ref:"users",
+    }],
     publicationYear: {
       type: String,
       required: true,
@@ -38,13 +37,9 @@ const bookSchema = new Schema({
     description: String,
     status: {
       type: String,
-      enum: ["Available", "Rented", "Sold"],
+      enum: ["Available", "Rented"],
       default: "Available",
     },
-    img:{
-      type:String,
-      required:true
-    }
   });
 
   const bookModel = mongoose.model("books", bookSchema);
